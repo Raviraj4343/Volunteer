@@ -1,0 +1,31 @@
+{
+  "name": "volunteer-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Volunteer API — Express + MongoDB + Clerk + Socket.io",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "check": "node --check src/server.js"
+  },
+  "dependencies": {
+    "@clerk/express": "^2.1.94",
+    "cloudinary": "^2.11.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.5",
+    "helmet": "^8.3.0",
+    "mongoose": "^9.12.2",
+    "morgan": "^1.12.1",
+    "multer": "^2.5.0",
+    "socket.io": "^4.8.4",
+    "svix": "^2.10.0",
+    "zod": "^4.6.7"
+  }
+}

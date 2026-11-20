@@ -1,0 +1,30 @@
+import { Avatar as AvatarPrimitive } from "radix-ui";
+import { cn } from "@/lib/utils";
+
+function Avatar({ className, ...props }) {
+  return (
+    <AvatarPrimitive.Root
+      data-slot="avatar"
+      className={cn("relative flex size-9 shrink-0 overflow-hidden rounded-full", className)}
+      {...props}
+    />
+  );
+}
+
+function AvatarImage({ className, ...props }) {
+  return <AvatarPrimitive.Image className={cn("aspect-square size-full object-cover", className)} {...props} />;
+}
+
+function AvatarFallback({ className, ...props }) {
+  return (
+    <AvatarPrimitive.Fallback
+      className={cn(
+        "flex size-full items-center justify-center rounded-full bg-primary-soft text-xs font-bold text-primary",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+export { Avatar, AvatarImage, AvatarFallback };
