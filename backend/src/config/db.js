@@ -9,17 +9,44 @@ import mongoose from "mongoose";
 import { env, isProduction } from "./env.js";
 
 export async function connectDB() {
-  // TODO:
-  //   1. mongoose.set("strictQuery", true)  — ignore unknown fields in filters
-  //   2. await mongoose.connect(env.MONGODB_URI)
-  //   3. log the host: mongoose.connection.host
-  //   4. listen for connection "error" and "disconnected" events and log them
-  //   5. In production, set autoIndex: false and build indexes deliberately
-  //      (or run Model.syncIndexes() once) — auto-building big indexes on boot is slow.
-  // HINT: If it fails, check Atlas → Network Access → add your IP (or 0.0.0.0/0 for dev).
-  //       Search: "mongoose connect options", "mongoose autoIndex production".
+  try{
+
+    // ignore unknown fields in query filters
+    mongoose.set("strictQuery", true);
+
+    // DIsable automatic index creation in production
+    const isProduction = env.NODE_ENV === "production";
+
+    // connect to MongoDB
+    await mongoose.connect(env.MONGODB_WRL, {
+      autoIndex: !isProduction,
+    });
+
+    // log connection info
+    console.log(`MongoDB connected: ${mongoose.connection.host}`);
+
+    // listen to connection events
+    mongoose.connection.on("error", (error) => {
+      console.error("MongoDB connection error:", error);
+    });
+
+    mongoose.connection.on("disconnected", ()=>{
+      console.warn("MongoDB disconnected!");
+    });
+  }catch (error){
+    console.error("MongoDB connection failed:", error.message);
+    throw error;
+  }
+
 }
 
 export async function disconnectDB() {
   // TODO: await mongoose.connection.close()
+  try{
+    await mongoose.connection.close();
+    console.log("MongoDB disconnected successfully.");
+  }catch(error){
+    console.error("MongoDB disconnection failed:", error.message);
+    throw error;
+  }
 }
