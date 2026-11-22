@@ -11,7 +11,7 @@ When a file is done, paste it to Claude for a review.
 
 ---
 
-## Step 0 — Setup (≈ 30 min)
+## Step 0 — Setup (≈ 30 min) 
 
 1. `cd backend && npm install` (already done once)
 2. `cp .env.example .env`

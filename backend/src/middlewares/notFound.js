@@ -8,5 +8,9 @@ import { ApiError } from "../utils/ApiError.js";
 
 export function notFound(req, res, next) {
   // TODO: throw ApiError.notFound(`Route not found: ${req.method} ${req.originalUrl}`)
-  // HINT: Throwing here sends it to errorHandler, so the response shape stays consistent.
+  // HINT: Throwing here sends it to errorHandler, so the response shape 
+  // stays consistent.
+  throw ApiError.notFound(
+    `Route not found: ${req.method} ${req.originalUrl}`
+  );
 }
