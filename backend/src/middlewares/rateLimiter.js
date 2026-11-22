@@ -19,14 +19,39 @@ import { env } from "../config/env.js";
 //       For per-user limits, keyGenerator can use the Clerk userId instead of the IP.
 //       Remember app.set("trust proxy", 1) in app.js or every user shares one IP in production!
 
+const commonOptions = {
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+
+  handler: (req, res)=>{
+    return res.status(429).json({
+      success: false,
+      data: null,
+      message: "Too many requests, please try again later."
+    });
+  },
+};
+
 export const apiLimiter = rateLimit({
   // TODO: general limit for all /api routes
+  ...commonOptions,
+  windowMs: 60*60*1000,
+  limit: 20,
+  message: "Too many requests from this IP, please try again later.",
 });
 
 export const writeLimiter = rateLimit({
   // TODO: stricter — e.g. 20 creates per hour. Use on POST /missions and POST /uploads.
+  ...commonOptions,
+  windowMs: 60*60*1000,
+  limit: 20,
+  message: "Too many write requests from this IP, please try again later.",
 });
 
 export const reportLimiter = rateLimit({
   // TODO: e.g. 10 reports per hour — stops people from mass-reporting.
+  ...commonOptions,
+  windowMs: 60*60*1000,
+  limit: 10,
+  message: "Too many report requests from this IP, please try again later.",
 });
