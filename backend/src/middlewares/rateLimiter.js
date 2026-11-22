@@ -35,9 +35,8 @@ const commonOptions = {
 export const apiLimiter = rateLimit({
   // TODO: general limit for all /api routes
   ...commonOptions,
-  windowMs: 60*60*1000,
-  limit: 20,
-  message: "Too many requests from this IP, please try again later.",
+  windowMs: env.RATE_LIMIT_WINDOW_MS,
+  limit: env.RATE_LIMIT_MAX,
 });
 
 export const writeLimiter = rateLimit({
@@ -45,13 +44,11 @@ export const writeLimiter = rateLimit({
   ...commonOptions,
   windowMs: 60*60*1000,
   limit: 20,
-  message: "Too many write requests from this IP, please try again later.",
 });
 
 export const reportLimiter = rateLimit({
   // TODO: e.g. 10 reports per hour — stops people from mass-reporting.
   ...commonOptions,
   windowMs: 60*60*1000,
-  limit: 10,
-  message: "Too many report requests from this IP, please try again later.",
+  limit: 10,  
 });
